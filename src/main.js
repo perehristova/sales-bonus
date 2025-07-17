@@ -49,20 +49,32 @@ function calculateBonusByProfit(index, total, seller) {
  */
 
 function analyzeSalesData(data, options) {
-    // Здесь проверим входящие данные
-    // @TODO: Проверка входных данных
+// Проверка входных данных
     if (!data ||
         !Array.isArray(data.sellers) ||
         data.sellers.length === 0
     ) {
         throw new Error('Некорректные входные данные');
     }
-    // @TODO: Проверка наличия опций
+
+    // Проверка опций
+    if (!options || typeof options !== 'object') {
+        throw new Error('Некорректные опции');
+    }
+
     const {
         calculateRevenue,
         calculateBonus
     } = options;
 
+    if (typeof calculateRevenue !== 'function' || typeof calculateBonus !== 'function') {
+        throw new Error('Опции должны содержать функции calculateRevenue и calculateBonus');
+    }
+
+    // Проверка записей о покупках
+    if (!Array.isArray(data.purchase_records) || data.purchase_records.length === 0) {
+        throw new Error('Отсутствуют записи о покупках');
+    }   
     // @TODO: Подготовка промежуточных данных для сбора статистики
 
     const sellerStats = data.sellers.map(seller => ({
