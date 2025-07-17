@@ -29,14 +29,15 @@ function calculateBonusByProfit(index, total, seller) {
     } = seller;
 
     if (index === 0) {
-        return 15;
+        return 0.15;
     } else if (index === 1 || index === 2) {
-        return 10;
+        return 0.10;
     } else if (index === total - 1) {
         return 0;
     } else {
-        return 5;
+        return 0.05;
     }
+
 
 }
 
@@ -126,7 +127,7 @@ function analyzeSalesData(data, options) {
     // @TODO: Назначение премий на основе ранжирования
     sortedSellers.forEach((seller, index) => {
         // Расчет бонуса по рангу
-        seller.bonus = seller.profit * (calculateBonusByProfit(index, totalSellers, seller) / 100);
+        seller.bonus = seller.profit * (calculateBonusByProfit(index, totalSellers, seller));
 
         // Формируем топ-10 товаров по количеству проданных единиц
         const topProductsArray = Object.entries(seller.products_sold)
